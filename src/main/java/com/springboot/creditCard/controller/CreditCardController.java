@@ -18,13 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.creditCard.document.CreditCard;
+import com.springboot.creditCard.dto.CreditCardEnterDto;
+import com.springboot.creditCard.dto.CreditCardPerDto;
 import com.springboot.creditCard.service.CreditCardInterface;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/api/personalCredit")
+@RequestMapping("/api/creditCard")
 public class CreditCardController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(CreditCardController.class);
@@ -64,7 +66,7 @@ public class CreditCardController {
 	                    @PathVariable String id) {
 
 	    return service.update(creditCard, id)
-	             .map(p -> ResponseEntity.created(URI.create("/api/personalCredit".concat(p.getId())))
+	             .map(p -> ResponseEntity.created(URI.create("/api/creditCard".concat(p.getId())))
 	             .contentType(MediaType.APPLICATION_JSON).body(p))
 	             .defaultIfEmpty(ResponseEntity.notFound().build());
 
@@ -78,5 +80,24 @@ public class CreditCardController {
 	    }).defaultIfEmpty(new ResponseEntity<Void>(HttpStatus.NOT_FOUND));
 
 	  }
+	  
+		@PostMapping("/savePer")
+		public Mono<ResponseEntity<CreditCardPerDto>> saveDto(@RequestBody CreditCardPerDto creditCardPerDto) {
+
+			LOGGER.info(creditCardPerDto.toString());
+
+			return service.saveDtoPer(creditCardPerDto).map(s -> ResponseEntity.created(URI.create("/api/creditCard"))
+					.contentType(MediaType.APPLICATION_JSON).body(s));
+
+		}
+		@PostMapping("/saveEnter")
+		public Mono<ResponseEntity<CreditCardEnterDto>> saveDto(@RequestBody CreditCardEnterDto creditCardEnterDto) {
+
+			LOGGER.info(creditCardEnterDto.toString());
+
+			return service.saveDtoEnter(creditCardEnterDto).map(s -> ResponseEntity.created(URI.create("/api/creditCard"))
+					.contentType(MediaType.APPLICATION_JSON).body(s));
+
+		}
 
 }

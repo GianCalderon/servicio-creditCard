@@ -1,10 +1,18 @@
 package com.springboot.creditCard.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.springboot.creditCard.client.EnterpriseClient;
+import com.springboot.creditCard.client.PersonalClient;
+import com.springboot.creditCard.controller.CreditCardController;
 import com.springboot.creditCard.document.CreditCard;
+import com.springboot.creditCard.dto.CreditCardEnterDto;
+import com.springboot.creditCard.dto.CreditCardPerDto;
 import com.springboot.creditCard.repo.CreditCardRepo;
+import com.springboot.creditCard.util.UtilConvert;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -12,9 +20,21 @@ import reactor.core.publisher.Mono;
 @Service
 public class CreditCardImpl implements CreditCardInterface {
 
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(CreditCardController.class);
+	
+	
 	@Autowired
 	CreditCardRepo repo;
 	
+	@Autowired
+	UtilConvert convert;
+	
+	@Autowired
+	PersonalClient webClientPer;
+	
+	@Autowired
+	EnterpriseClient webClientEnter;
 	
 	@Override
 	public Flux<CreditCard> findAll() {
@@ -52,6 +72,40 @@ public class CreditCardImpl implements CreditCardInterface {
 	public Mono<Void> delete(CreditCard creditCard) {
 		// TODO Auto-generated method stub
 		return repo.delete(creditCard);
+	}
+
+	@Override
+	public Mono<CreditCardPerDto> saveDtoPer(CreditCardPerDto creditCardPerDto) {
+	
+		
+		LOGGER.info("service:"+creditCardPerDto.toString());
+
+		return save(convert.convertCreditCardPer(creditCardPerDto)).flatMap(sa -> {
+
+			creditCardPerDto.getHolder().setIdCuenta(sa.getId());
+			webClientPer.save(creditCardPerDto.getHolder()).block();
+			
+
+			return Mono.just(creditCardPerDto);
+		});
+	}
+
+	@Override
+	public Mono<CreditCardEnterDto> saveDtoEnter(CreditCardEnterDto creditCardEnterDto) {
+		
+		
+		LOGGER.info("service:"+creditCardEnterDto.toString());
+
+		return save(convert.convertCreditCardEnter(creditCardEnterDto)).flatMap(sa -> {
+
+			creditCardEnterDto.getHolder().setIdCuenta(sa.getId());
+			webClientEnter.save(creditCardEnterDto.getHolder()).block();
+			
+
+			return Mono.just(creditCardEnterDto);
+		});
+		
+		
 	}
 
 }
