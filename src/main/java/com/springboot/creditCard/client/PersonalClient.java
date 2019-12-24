@@ -23,8 +23,11 @@ public class PersonalClient {
 	
 private static final Logger LOGGER = LoggerFactory.getLogger(PersonalClient.class);
 	
-	@Autowired
-	private WebClient clientPer;
+//	@Autowired
+//	private WebClient clientPer;
+
+
+     WebClient clientPer = WebClient.create("http://localhost:8001/api/personal");
 	
 	public Flux<PersonalDto> findAll() {
 		

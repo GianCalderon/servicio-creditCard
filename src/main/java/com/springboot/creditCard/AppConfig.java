@@ -13,7 +13,7 @@ public class AppConfig {
 	
 	@Bean
 	public WebClient registrarWebClientPer() {
-		return WebClient.create("http://localhost:8020/api/enterprise/saveDto");
+		return WebClient.create("http://localhost:8020/api/enterprise/");
 	}
 	
 

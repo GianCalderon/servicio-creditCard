@@ -80,12 +80,10 @@ public class CreditCardImpl implements CreditCardInterface {
 		
 		LOGGER.info("service:"+creditCardPerDto.toString());
 
-		return save(convert.convertCreditCardPer(creditCardPerDto)).flatMap(sa -> {
-
-			creditCardPerDto.getHolder().setIdCuenta(sa.getId());
-			webClientPer.save(creditCardPerDto.getHolder()).block();
+		return repo.save(convert.convertCreditCardPer(creditCardPerDto)).flatMap(sa -> {
+			webClientPer.save(creditCardPerDto.getHeadline()).block();
+			creditCardPerDto.setId(sa.getId());
 			
-
 			return Mono.just(creditCardPerDto);
 		});
 	}
@@ -96,11 +94,9 @@ public class CreditCardImpl implements CreditCardInterface {
 		
 		LOGGER.info("service:"+creditCardEnterDto.toString());
 
-		return save(convert.convertCreditCardEnter(creditCardEnterDto)).flatMap(sa -> {
+		return repo.save(convert.convertCreditCardEnter(creditCardEnterDto)).flatMap(sa -> {
 
-			creditCardEnterDto.getHolder().setIdCuenta(sa.getId());
-			webClientEnter.save(creditCardEnterDto.getHolder()).block();
-			
+			webClientEnter.save(creditCardEnterDto.getHeadline()).block();
 
 			return Mono.just(creditCardEnterDto);
 		});

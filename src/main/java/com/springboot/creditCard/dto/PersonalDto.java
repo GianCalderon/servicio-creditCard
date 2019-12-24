@@ -5,7 +5,6 @@ import lombok.Data;
 @Data
 public class PersonalDto {
 
-	private String idCuenta;
 	private String tipoDoc;
 	private String numDoc;
 	private String name;

@@ -22,12 +22,14 @@ public class EnterpriseClient {
 
 private static final Logger LOGGER = LoggerFactory.getLogger(EnterpriseClient.class);
 	
-	@Autowired
-	private WebClient clientEmp;
+//	@Autowired
+//	private WebClient clientEmp;
+
+    WebClient clientEnt = WebClient.create("http://localhost:8001/api/personal");
 	
 	public Flux<EnterpriseDto> findAll() {
 		
-		return clientEmp.get().accept(MediaType.APPLICATION_JSON)
+		return clientEnt.get().accept(MediaType.APPLICATION_JSON)
 				.exchange()
 				.flatMapMany(response ->response.bodyToFlux(EnterpriseDto.class));
 	}
@@ -37,7 +39,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(EnterpriseClient.cl
 		
 		Map<String,Object> param=new HashMap<String,Object>();
 		
-		return clientEmp.get().uri("/{id}",param)
+		return clientEnt.get().uri("/{id}",param)
 				.accept(MediaType.APPLICATION_JSON)
 				.retrieve()
 				.bodyToMono(EnterpriseDto.class);
@@ -51,7 +53,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(EnterpriseClient.cl
 		
 		LOGGER.info("listo a enviar: "+enterpriseDto.toString());
 		
-		return clientEmp.post()
+		return clientEnt.post()
 			   .accept(MediaType.APPLICATION_JSON)
 			   .contentType(MediaType.APPLICATION_JSON)
 		       .body(BodyInserters.fromValue(enterpriseDto))
@@ -65,7 +67,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(EnterpriseClient.cl
 
 	public Mono<Void> delete(String id) {
 		
-		return clientEmp.delete()
+		return clientEnt.delete()
 				.uri("/{id}",Collections.singletonMap("id",id))
 				.exchange()
 				.then();
@@ -73,7 +75,7 @@ private static final Logger LOGGER = LoggerFactory.getLogger(EnterpriseClient.cl
 
 	public Mono<EnterpriseDto> update(EnterpriseDto enterpriseDto, String id) {
 		
-		return clientEmp.post()
+		return clientEnt.post()
 				   .accept(MediaType.APPLICATION_JSON)
 				   .contentType(MediaType.APPLICATION_JSON)
 				   .syncBody(enterpriseDto)
