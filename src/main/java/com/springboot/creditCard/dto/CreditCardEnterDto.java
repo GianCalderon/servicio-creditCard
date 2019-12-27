@@ -6,6 +6,6 @@ public class CreditCardEnterDto {
 	
 	private String tea;
 	private int balance;
-	private EnterpriseDto headline;
+	private EnterpriseDto enteprise;
 	
 }

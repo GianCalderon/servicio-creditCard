@@ -96,7 +96,7 @@ public class CreditCardImpl implements CreditCardInterface {
 
 		return repo.save(convert.convertCreditCardEnter(creditCardEnterDto)).flatMap(sa -> {
 
-			webClientEnter.save(creditCardEnterDto.getHeadline()).block();
+			webClientEnter.save(creditCardEnterDto.getEnteprise()).block();
 
 			return Mono.just(creditCardEnterDto);
 		});

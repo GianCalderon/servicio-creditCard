@@ -49,7 +49,7 @@ public class UtilConvert {
 	
 		
 		creditCard.setNameCard("Tarjeta-credito-Empresarial");
-		creditCard.setNumberDoc(creditCardEnterDto.getHeadline().getNumDoc());
+		creditCard.setNumberDoc(creditCardEnterDto.getEnteprise().getNumDoc());
 		creditCard.setNumberCard("606060"+String.valueOf((int)(Math.random()*99999999+1)));
 		creditCard.setCodeSecurity(String.valueOf((int)(Math.random()*999+1)));
 		creditCard.setBalance(creditCardEnterDto.getBalance());
