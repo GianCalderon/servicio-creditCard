@@ -6,6 +6,7 @@ import java.util.Date;
 import org.springframework.stereotype.Component;
 
 import com.springboot.creditCard.document.CreditCard;
+import com.springboot.creditCard.dto.CreditCardDto;
 import com.springboot.creditCard.dto.CreditCardEnterDto;
 import com.springboot.creditCard.dto.CreditCardPerDto;
 
@@ -32,6 +33,7 @@ public class UtilConvert {
 		creditCard.setNumberCard("505050"+String.valueOf((int)(Math.random()*99999999+1)));
 		creditCard.setCodeSecurity(String.valueOf((int)(Math.random()*999+1)));
 		creditCard.setBalance(creditCardPerDto.getBalance());
+		creditCard.setAvailableBalance(creditCardPerDto.getBalance());
 		creditCard.setTea(creditCardPerDto.getTea());
 		creditCard.setDateExpiration(expiration(new Date(),365));
 		creditCard.setDateCreate(new Date());
@@ -53,10 +55,31 @@ public class UtilConvert {
 		creditCard.setNumberCard("606060"+String.valueOf((int)(Math.random()*99999999+1)));
 		creditCard.setCodeSecurity(String.valueOf((int)(Math.random()*999+1)));
 		creditCard.setBalance(creditCardEnterDto.getBalance());
+		creditCard.setAvailableBalance(creditCardEnterDto.getBalance());
 		creditCard.setTea(creditCardEnterDto.getTea());
 		creditCard.setDateExpiration(expiration(new Date(),365));
 		creditCard.setDateCreate(new Date());
 		creditCard.setDateUpdate(new Date());
+		
+		return creditCard;
+
+	}
+	
+	public CreditCard creditCardPer(CreditCardDto creditCardDto ) {
+		CreditCard  creditCard = new CreditCard();
+
+		
+		creditCard.setNameCard("Tarjeta-credito-Personal");
+		creditCard.setNumberDoc(creditCardDto.getDni());
+		creditCard.setNumberCard("505050"+String.valueOf((int)(Math.random()*99999999+1)));
+		creditCard.setCodeSecurity(String.valueOf((int)(Math.random()*999+1)));
+		creditCard.setBalance(creditCardDto.getBalance());
+		creditCard.setAvailableBalance(creditCardDto.getBalance());
+		creditCard.setTea(creditCardDto.getTea());
+		creditCard.setDateExpiration(expiration(new Date(),365));
+		creditCard.setDateCreate(new Date());
+		creditCard.setDateUpdate(new Date());
+
 		
 		return creditCard;
 

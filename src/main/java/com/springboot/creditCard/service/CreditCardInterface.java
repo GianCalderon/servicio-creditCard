@@ -1,6 +1,7 @@
 package com.springboot.creditCard.service;
 
 import com.springboot.creditCard.document.CreditCard;
+import com.springboot.creditCard.dto.CreditCardDto;
 import com.springboot.creditCard.dto.CreditCardEnterDto;
 import com.springboot.creditCard.dto.CreditCardPerDto;
 
@@ -13,7 +14,7 @@ public interface CreditCardInterface {
 	  
 	  public Mono<CreditCard> findById(String id);
 	  
-	  public Mono<CreditCard> save(CreditCard creditCard);
+	  public Mono<CreditCard> save(CreditCardDto creditCardDto);
 	  
 	  public Mono<CreditCard> update(CreditCard creditCard,String id);
 	  
@@ -22,6 +23,9 @@ public interface CreditCardInterface {
 	  public Mono<CreditCardPerDto> saveDtoPer(CreditCardPerDto creditCardPerDto);
 	  
 	  public Mono<CreditCardEnterDto> saveDtoEnter(CreditCardEnterDto creditCardEnterDto);
+	 	  
+	  public Mono<CreditCard> findByNumberCard(String id);
+
   
 
 	

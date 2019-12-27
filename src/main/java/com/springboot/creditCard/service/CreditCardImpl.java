@@ -1,5 +1,7 @@
 package com.springboot.creditCard.service;
 
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import com.springboot.creditCard.client.EnterpriseClient;
 import com.springboot.creditCard.client.PersonalClient;
 import com.springboot.creditCard.controller.CreditCardController;
 import com.springboot.creditCard.document.CreditCard;
+import com.springboot.creditCard.dto.CreditCardDto;
 import com.springboot.creditCard.dto.CreditCardEnterDto;
 import com.springboot.creditCard.dto.CreditCardPerDto;
 import com.springboot.creditCard.repo.CreditCardRepo;
@@ -49,21 +52,25 @@ public class CreditCardImpl implements CreditCardInterface {
 	}
 
 	@Override
-	public Mono<CreditCard> save(CreditCard creditCard) {
+	public Mono<CreditCard> save(CreditCardDto creditCardDto) {
 		// TODO Auto-generated method stub
-		return repo.save(creditCard);
+		return repo.save(convert.creditCardPer(creditCardDto));
 	}
 
 	@Override
 	public Mono<CreditCard> update(CreditCard creditCard, String id) {
 		// TODO Auto-generated method stub
-	    return repo.findById(id).flatMap(c -> {
+	    return repo.findById(id).flatMap(tarjeta -> {
 
-	     c.setNumberCard(creditCard.getNumberCard());
-	     c.setCodeSecurity(creditCard.getCodeSecurity());
-	     c.setDateExpiration(creditCard.getDateExpiration());
+	     tarjeta.setNumberCard(creditCard.getNumberCard());
+	     tarjeta.setCodeSecurity(creditCard.getCodeSecurity());
+	     tarjeta.setDateExpiration(creditCard.getDateExpiration());
+	     tarjeta.setTea(creditCard.getTea());
+	     tarjeta.setBalance(creditCard.getBalance());
+	     tarjeta.setAvailableBalance(creditCard.getAvailableBalance());
+	     tarjeta.setDateUpdate(new Date ());
 	        
-	        return repo.save(c);
+	        return repo.save(tarjeta);
 
 	      });
 	}
@@ -102,6 +109,12 @@ public class CreditCardImpl implements CreditCardInterface {
 		});
 		
 		
+	}
+
+	@Override
+	public Mono<CreditCard> findByNumberCard(String numberCard) {
+		
+		return repo.findByNumberCard(numberCard);
 	}
 
 }

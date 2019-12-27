@@ -6,7 +6,7 @@ public class CreditCardPerDto {
 	
 	private String id;
 	private String tea;
-	private int balance;
+	private Double balance;
 	private PersonalDto headline;
 	
 }

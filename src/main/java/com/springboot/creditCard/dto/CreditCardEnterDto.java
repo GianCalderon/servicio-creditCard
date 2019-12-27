@@ -5,7 +5,7 @@ import lombok.Data;
 public class CreditCardEnterDto {
 	
 	private String tea;
-	private int balance;
+	private Double balance;
 	private EnterpriseDto enteprise;
 	
 }
