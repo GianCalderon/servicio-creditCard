@@ -24,7 +24,7 @@ public class PersonalClient {
 private static final Logger LOGGER = LoggerFactory.getLogger(PersonalClient.class);
 	
 //	@Autowired
-//	private WebClient clientPer;
+//	private WebClient clientEnt;
 
 
      WebClient clientPer = WebClient.create("http://localhost:8001/api/personal");
@@ -83,6 +83,18 @@ private static final Logger LOGGER = LoggerFactory.getLogger(PersonalClient.clas
 				   .syncBody(personalDto)
 				   .retrieve()
 				   .bodyToMono(PersonalDto.class);
+	}
+	
+	public Mono<PersonalDto> findByNumDoc(String dni) {
+		
+		return clientPer.get()
+				.uri("/dni/{dni}",Collections.singletonMap("dni",dni))
+				.accept(MediaType.APPLICATION_JSON)
+				.retrieve()
+				.bodyToMono(PersonalDto.class);
+		        
+//		        .exchange()
+//		        .flatMapMany(response ->response.bodyToMono(FamilyDTO.class));
 	}
 
 }

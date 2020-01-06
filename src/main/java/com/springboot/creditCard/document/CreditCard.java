@@ -20,10 +20,10 @@ public class CreditCard {
 	
 	@Id
 	private String id;
-	
+
 	@NotNull(message = "CreditCard numberDoc must not be null")
-	private String numberDoc;
-	
+	private String numDoc;
+		
 	@NotNull(message = "CreditCard nameCard must not be null")
 	private String nameCard;
 	
@@ -41,7 +41,7 @@ public class CreditCard {
 	private Double availableBalance;
 	
 	@NotNull(message = "CreditCard tea must not be null")
-	private String tea;
+	private Double tea;
 	
 	
 	@JsonFormat(pattern = "yyyy-MM-dd")

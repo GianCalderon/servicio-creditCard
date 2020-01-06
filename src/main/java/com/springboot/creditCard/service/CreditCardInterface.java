@@ -4,6 +4,7 @@ import com.springboot.creditCard.document.CreditCard;
 import com.springboot.creditCard.dto.CreditCardDto;
 import com.springboot.creditCard.dto.CreditCardEnterDto;
 import com.springboot.creditCard.dto.CreditCardPerDto;
+import com.springboot.creditCard.dto.CreditDto;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -20,9 +21,9 @@ public interface CreditCardInterface {
 	  
 	  public Mono<Void> delete(CreditCard creditCard);
 	  
-	  public Mono<CreditCardPerDto> saveDtoPer(CreditCardPerDto creditCardPerDto);
+	  public Mono<CreditCard> saveDtoPer(CreditDto creditDto);
 	  
-	  public Mono<CreditCardEnterDto> saveDtoEnter(CreditCardEnterDto creditCardEnterDto);
+	  public Mono<CreditCard> saveDtoEnter(CreditDto creditDto);
 	 	  
 	  public Mono<CreditCard> findByNumberCard(String id);
 

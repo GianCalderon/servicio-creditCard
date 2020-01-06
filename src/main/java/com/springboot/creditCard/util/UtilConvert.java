@@ -7,8 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.springboot.creditCard.document.CreditCard;
 import com.springboot.creditCard.dto.CreditCardDto;
-import com.springboot.creditCard.dto.CreditCardEnterDto;
-import com.springboot.creditCard.dto.CreditCardPerDto;
+import com.springboot.creditCard.dto.CreditDto;
 
 @Component
 public class UtilConvert {
@@ -23,18 +22,18 @@ public class UtilConvert {
 	}
 	
 	
-	public CreditCard convertCreditCardPer(CreditCardPerDto creditCardPerDto) {
+	public CreditCard convertCreditCardPer(CreditDto creditDto) {
 
 		CreditCard  creditCard = new CreditCard();
 
 		
 		creditCard.setNameCard("Tarjeta-credito-Personal");
-		creditCard.setNumberDoc(creditCardPerDto.getHeadline().getNumDoc());
+		creditCard.setNumDoc(creditDto.getNumDoc());
 		creditCard.setNumberCard("505050"+String.valueOf((int)(Math.random()*99999999+1)));
 		creditCard.setCodeSecurity(String.valueOf((int)(Math.random()*999+1)));
-		creditCard.setBalance(creditCardPerDto.getBalance());
-		creditCard.setAvailableBalance(creditCardPerDto.getBalance());
-		creditCard.setTea(creditCardPerDto.getTea());
+		creditCard.setBalance(creditDto.getBalance());
+		creditCard.setAvailableBalance(creditDto.getBalance());
+		creditCard.setTea(10.0);
 		creditCard.setDateExpiration(expiration(new Date(),365));
 		creditCard.setDateCreate(new Date());
 		creditCard.setDateUpdate(new Date());
@@ -44,19 +43,19 @@ public class UtilConvert {
 
 	}
 	
-	public CreditCard convertCreditCardEnter(CreditCardEnterDto creditCardEnterDto) {
+	public CreditCard convertCreditCardEnt(CreditDto creditDto) {
 
 		CreditCard  creditCard = new CreditCard();
 
 	
 		
 		creditCard.setNameCard("Tarjeta-credito-Empresarial");
-		creditCard.setNumberDoc(creditCardEnterDto.getEnteprise().getNumDoc());
+		creditCard.setNumDoc(creditDto.getNumDoc());
 		creditCard.setNumberCard("606060"+String.valueOf((int)(Math.random()*99999999+1)));
 		creditCard.setCodeSecurity(String.valueOf((int)(Math.random()*999+1)));
-		creditCard.setBalance(creditCardEnterDto.getBalance());
-		creditCard.setAvailableBalance(creditCardEnterDto.getBalance());
-		creditCard.setTea(creditCardEnterDto.getTea());
+		creditCard.setBalance(creditDto.getBalance());
+		creditCard.setAvailableBalance(creditDto.getBalance());
+		creditCard.setTea(20.0);
 		creditCard.setDateExpiration(expiration(new Date(),365));
 		creditCard.setDateCreate(new Date());
 		creditCard.setDateUpdate(new Date());
@@ -70,12 +69,12 @@ public class UtilConvert {
 
 		
 		creditCard.setNameCard("Tarjeta-credito-Personal");
-		creditCard.setNumberDoc(creditCardDto.getDni());
+		creditCard.setNumDoc(creditCardDto.getDni());
 		creditCard.setNumberCard("505050"+String.valueOf((int)(Math.random()*99999999+1)));
 		creditCard.setCodeSecurity(String.valueOf((int)(Math.random()*999+1)));
 		creditCard.setBalance(creditCardDto.getBalance());
 		creditCard.setAvailableBalance(creditCardDto.getBalance());
-		creditCard.setTea(creditCardDto.getTea());
+		creditCard.setTea(18.0);
 		creditCard.setDateExpiration(expiration(new Date(),365));
 		creditCard.setDateCreate(new Date());
 		creditCard.setDateUpdate(new Date());

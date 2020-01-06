@@ -12,8 +12,7 @@ import com.springboot.creditCard.client.PersonalClient;
 import com.springboot.creditCard.controller.CreditCardController;
 import com.springboot.creditCard.document.CreditCard;
 import com.springboot.creditCard.dto.CreditCardDto;
-import com.springboot.creditCard.dto.CreditCardEnterDto;
-import com.springboot.creditCard.dto.CreditCardPerDto;
+import com.springboot.creditCard.dto.CreditDto;
 import com.springboot.creditCard.repo.CreditCardRepo;
 import com.springboot.creditCard.util.UtilConvert;
 
@@ -34,10 +33,10 @@ public class CreditCardImpl implements CreditCardInterface {
 	UtilConvert convert;
 	
 	@Autowired
-	PersonalClient webClientPer;
+	PersonalClient clientPer;
 	
 	@Autowired
-	EnterpriseClient webClientEnter;
+	EnterpriseClient clientEnt;
 	
 	@Override
 	public Flux<CreditCard> findAll() {
@@ -82,30 +81,27 @@ public class CreditCardImpl implements CreditCardInterface {
 	}
 
 	@Override
-	public Mono<CreditCardPerDto> saveDtoPer(CreditCardPerDto creditCardPerDto) {
-	
-		
-		LOGGER.info("service:"+creditCardPerDto.toString());
+	public Mono<CreditCard> saveDtoPer(CreditDto creditDto) {
 
-		return repo.save(convert.convertCreditCardPer(creditCardPerDto)).flatMap(sa -> {
-			webClientPer.save(creditCardPerDto.getHeadline()).block();
-			creditCardPerDto.setId(sa.getId());
+		LOGGER.info("service:"+creditDto.toString());
+		
+		
+		return clientPer.findByNumDoc(creditDto.getNumDoc()).flatMap(personal->{
 			
-			return Mono.just(creditCardPerDto);
+			return repo.save(convert.convertCreditCardPer(creditDto));
 		});
+
 	}
 
 	@Override
-	public Mono<CreditCardEnterDto> saveDtoEnter(CreditCardEnterDto creditCardEnterDto) {
+	public Mono<CreditCard> saveDtoEnter(CreditDto creditDto) {
 		
 		
-		LOGGER.info("service:"+creditCardEnterDto.toString());
+		LOGGER.info("service:"+creditDto.toString());
 
-		return repo.save(convert.convertCreditCardEnter(creditCardEnterDto)).flatMap(sa -> {
-
-			webClientEnter.save(creditCardEnterDto.getEnteprise()).block();
-
-			return Mono.just(creditCardEnterDto);
+        return clientEnt.findByNumDoc(creditDto.getNumDoc()).flatMap(enterprise->{
+			
+			return repo.save(convert.convertCreditCardEnt(creditDto));
 		});
 		
 		

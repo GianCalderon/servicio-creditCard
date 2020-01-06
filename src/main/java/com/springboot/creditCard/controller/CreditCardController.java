@@ -21,6 +21,7 @@ import com.springboot.creditCard.document.CreditCard;
 import com.springboot.creditCard.dto.CreditCardDto;
 import com.springboot.creditCard.dto.CreditCardEnterDto;
 import com.springboot.creditCard.dto.CreditCardPerDto;
+import com.springboot.creditCard.dto.CreditDto;
 import com.springboot.creditCard.service.CreditCardInterface;
 
 import reactor.core.publisher.Flux;
@@ -85,26 +86,26 @@ public class CreditCardController {
 
 	  }
 	  
-		@PostMapping("/creditCardPer")
-		public Mono<ResponseEntity<CreditCardPerDto>> saveDto(@RequestBody CreditCardPerDto creditCardPerDto) {
+		@PostMapping("/savePer")
+		public Mono<ResponseEntity<CreditCard>> savePersonal(@RequestBody CreditDto creditDto) {
 
-			LOGGER.info(creditCardPerDto.toString());
+			LOGGER.info(creditDto.toString());
 
-			return service.saveDtoPer(creditCardPerDto).map(s -> ResponseEntity.created(URI.create("/api/creditCard"))
+			return service.saveDtoPer(creditDto).map(s -> ResponseEntity.created(URI.create("/api/creditCard"))
 					.contentType(MediaType.APPLICATION_JSON).body(s));
 
 		}
-		@PostMapping("/creditCardEnt")
-		public Mono<ResponseEntity<CreditCardEnterDto>> saveDto(@RequestBody CreditCardEnterDto creditCardEnterDto) {
+		@PostMapping("/saveEnt")
+		public Mono<ResponseEntity<CreditCard>> saveEnterprise(@RequestBody  CreditDto creditDto) {
 
-			LOGGER.info(creditCardEnterDto.toString());
+			LOGGER.info(creditDto.toString());
 
-			return service.saveDtoEnter(creditCardEnterDto).map(s -> ResponseEntity.created(URI.create("/api/creditCard"))
+			return service.saveDtoEnter(creditDto).map(s -> ResponseEntity.created(URI.create("/api/creditCard"))
 					.contentType(MediaType.APPLICATION_JSON).body(s));
 
 		}
 		
-		@GetMapping("/tarjeta/{numberCard}")
+		@GetMapping("/numCard/{numberCard}")
 		public Mono<ResponseEntity<CreditCard>> searchByNumDoc(@PathVariable String numberCard) {
 			
 			LOGGER.info("controller #Tarjeta :--->"+numberCard);
